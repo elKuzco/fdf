@@ -1,43 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_strn_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qlouisia <qlouisia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 16:37:15 by qlouisia          #+#    #+#             */
-/*   Updated: 2019/02/04 18:40:14 by qlouisia         ###   ########.fr       */
+/*   Created: 2018/12/09 17:20:33 by qlouisia          #+#    #+#             */
+/*   Updated: 2018/12/18 19:01:17 by qlouisia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_itoa(int n)
+int	ft_strn_is(char *str, char *charset, size_t n)
 {
-	char		*nbr;
-	int long	nb;
-	int			i;
-	int			size;
+	size_t	i;
+	char	same;
 
-	nb = n;
-	i = 0;
-	size = ft_get_int_size(nb);
-	if (!(nbr = (char *)malloc(sizeof(char) * size + 1)))
-		return (NULL);
-	if (nb < 0)
+	same = 1;
+	while (str && *str && n-- && same)
 	{
-		nb = nb * -1;
-		nbr[i++] = '-';
-		size--;
+		i = 0;
+		same = 0;
+		while (charset[i])
+			if (*str == charset[i++])
+				same = 1;
+		if (same)
+			str++;
 	}
-	while (size > 0)
-	{
-		nbr[i] = ((nb / ft_power(10, size - 1)) + '0');
-		nb = nb % ft_power(10, size - 1);
-		i++;
-		size--;
-	}
-	nbr[i] = '\0';
-	return (nbr);
+	return (same ? 1 : 0);
 }
